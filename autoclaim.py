@@ -2,18 +2,30 @@ import time
 import schedule
 import os
 import threading
+import logging
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from flask import Flask
 
-# Fungsi untuk menjalankan bot FreeBitco.in
+# Konfigurasi logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
 def run_bot():
     while True:
-        print("Menjalankan bot FreeBitco.in...")
-        # TODO: Panggil fungsi utama bot kamu di sini
-        time.sleep(3600)  # Tunggu 1 jam sebelum klaim lagi
+        logging.info("Menjalankan bot FreeBitco.in...")
+
+        # TODO: Panggil fungsi login dan claim di sini
+        berhasil_claim = True  # Ganti ini dengan kondisi klaim sukses dari bot
+
+        if berhasil_claim:
+            logging.info("✅ Faucet berhasil diklaim!")
+        else:
+            logging.warning("⚠️ Gagal klaim faucet!")
+
+        logging.info("Menunggu 1 jam sebelum klaim berikutnya...")
+        time.sleep(3600)  # Tunggu 1 jam sebelum klaim berikutnya
 
 # Mulai bot dalam thread terpisah agar server Flask tetap berjalan
 threading.Thread(target=run_bot, daemon=True).start()
