@@ -1,10 +1,32 @@
 import time
 import schedule
 import os
+import threading
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from flask import Flask
+
+# Fungsi untuk menjalankan bot FreeBitco.in
+def run_bot():
+    while True:
+        print("Menjalankan bot FreeBitco.in...")
+        # TODO: Panggil fungsi utama bot kamu di sini
+        time.sleep(3600)  # Tunggu 1 jam sebelum klaim lagi
+
+# Mulai bot dalam thread terpisah agar server Flask tetap berjalan
+threading.Thread(target=run_bot, daemon=True).start()
+
+# Buat aplikasi Flask untuk Render Web Service
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot FreeBitco.in sedang berjalan!"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)  # Render membutuhkan aplikasi untuk berjalan di port tertentu
 
 # Ambil data dari environment variables
 EMAIL = os.environ.get("EMAIL")
